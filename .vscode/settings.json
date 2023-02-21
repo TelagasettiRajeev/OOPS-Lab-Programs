@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\telag\\OneDrive\\Desktop\\oracle jar file\\ojdbc8.jar"
+    ]
+}
