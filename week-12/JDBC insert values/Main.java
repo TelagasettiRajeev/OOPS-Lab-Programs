@@ -3,14 +3,17 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 class Main{
     public static void main(String[] args) {
+        Connection con = null;
+        PreparedStatement psmt = null;
         try
         {
             Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","123");
-            PreparedStatement psmt = con.prepareStatement("INSERT INTO MANAGER VALUES(?,?,?)");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","123");
+            psmt = con.prepareStatement("INSERT INTO MANAGER VALUES(?,?,?)");
             while(true)
             {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -38,11 +41,27 @@ class Main{
                     break;
                 }
             }
-            con.close();
+            
         }
         catch(Exception e)
         {
             System.out.println( e );
+        }
+        finally{
+            try{
+                if(psmt != null)
+                {
+                    psmt.close();
+                }
+                if(con != null)
+                {
+                    con.close();
+                }
+            }
+            catch(SQLException e)
+            {
+                System.out.println( e );
+            }
         }
     }
 }
